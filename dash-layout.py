@@ -201,7 +201,6 @@ def plot_figures():
         st.pyplot(fig2)
 
 plot_figures()
-plot_figure.clear()
 
 st.sidebar.markdown('''
 ---
