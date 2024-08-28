@@ -119,6 +119,10 @@ if rat_theory == 'RAT':
     fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [0.25, 0.5, 1.0])
 else:
     fmaxs=[0.0]
+with col3.expander("See explanation"):
+    st.write('''
+    For MRAT theory, f$_{\\rm max}$ is extimated by the Bfield strength and Ncl
+    ''')
 
 with col1:
     c1,c2=st.columns(2)
