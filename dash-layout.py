@@ -212,7 +212,7 @@ https://ui.adsabs.harvard.edu/abs/2020ApJ...896...44L \\
 https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T \\
 https://arxiv.org/abs/2403.17088
 ''')
-st.sidebar.divider()
+# st.sidebar.divider()
 st.sidebar.markdown('''
 ---
 Created with ❤️ by [Le N. Tram](The DustPOL-py is at: https://github.com/lengoctram/DustPOL-py).
