@@ -10,7 +10,7 @@ from scipy.signal import savgol_filter
 # Execute DustPOL-py
 # ----------------------------------------------------------------------------------------- #
 @st.cache_data(persist="disk",max_entries=1000,show_spinner="Executing DustPOL-py ...")
-def execute_DustPOL(U_rad, ngas, fmax, grain_type, grain_shape, amax, amin, rat_theory, Bfield, Ncl, p_plot_option):
+def execute_DustPOL(U_rad, ngas, fmax, grain_type, grain_shape, amax, amin, rat_theory, ratd, Smax, Bfield, Ncl, p_plot_option):
     dir_dustpol = os.getcwd()+'/DustPOL-py/'
     sys.path.insert(1, dir_dustpol)
     
@@ -20,12 +20,14 @@ def execute_DustPOL(U_rad, ngas, fmax, grain_type, grain_shape, amax, amin, rat_
     
     # Update parameters
     param_updates = {
+        1: ratd,
         7: U_rad,
         11: ngas,
         15: amin,
         16: amax,
         14: grain_type,
         19: grain_shape,
+        20: Smax,
         24: rat_theory,
         25: fmax,
         26: Bfield,
@@ -103,6 +105,16 @@ if rat_theory == 'MRAT':
     st.sidebar.subheader('Number of iron cluster (Ncl)')
     Ncl = st.sidebar.slider('Specify Ncl', 10., 1.e5, 10., format='%.1e')
 
+ratd,Smax=('off',-1.e-99)
+c1,c2=st.sidebar.columns(2)
+with c1:
+    ratd = c1.checkbox('RAT-D mechanism')
+    if (ratd):
+        ratd='on'
+        Smax=c2.selectbox('Smax',[1e5,1e6,1e7,1e8,1e9,1e10],format_func=lambda x: '{:.1e}'.format(x))
+        with c2.expander("Definition"):
+            st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$ -- characterizing grain's porosity)
+            ''')
 # Row A
 st.markdown('### Parameters')
 col1, col2, col3 = st.columns(3)
@@ -163,7 +175,7 @@ def plot_figures():
     for U_rad in U_rads:
         for n_gas in ngass: 
             for f_max in fmaxs:
-                results = execute_DustPOL(U_rad, n_gas, f_max, grain_type, grain_shape, amax, amin, rat_theory, Bfield, Ncl,p_plot_option)
+                results = execute_DustPOL(U_rad, n_gas, f_max, grain_type, grain_shape, amax, amin, rat_theory, ratd, Smax, Bfield, Ncl,p_plot_option)
                 if p_plot_option == 'Both':
                     w, pext, pem, A_per_Ngas = results
                     # smooth pext (for visualization) -- not physically affected
