@@ -6,7 +6,6 @@ import scipy.integrate as integrate
 import warnings
 from astropy import log, constants
 from matplotlib.colors import LogNorm
-from joblib import Parallel, delayed#, Memory
 from scipy.interpolate import interp1d
 from astropy.io import fits
 from scipy import interpolate
