@@ -125,7 +125,7 @@ def plot_figures():
         fig1, ax1 = plt.subplots(figsize=(12, 3))
         ax1.set_xlabel('$\\rm wavelength\\,(um)$')
         ax1.set_ylabel('$\\rm p_{ext}/N_{H}\\,(\\%/cm^{-2})$')
-        ax1.set_title('$\\sf Starlight\\,Polarization$',pad=20)
+        ax1.set_title('$\\rm Starlight\\,Polarization$',pad=20)
         ax11=ax1.twinx()
         ax11.set_ylabel('$\\rm A_{\\lambda}/N_{\\rm H}$')
 
@@ -133,7 +133,7 @@ def plot_figures():
         fig2, ax2 = plt.subplots(figsize=(12, 3))
         ax2.set_xlabel('$\\rm wavelength\\,(um m)$')
         ax2.set_ylabel('$\\rm p_{em}\\,(\\%)$')
-        ax2.set_title('$\\sf Thermal\\,Polarization$',pad=20)
+        ax2.set_title('$\\rm Thermal\\,Polarization$',pad=20)
         ax22=ax2.secondary_yaxis('right')
         ax22.set_ylabel('$\\rm p_{em}\\,(\\%)$')
         
@@ -166,7 +166,7 @@ def plot_figures():
 
     if ax1:
         ax1.legend(frameon=False)
-        ax11.legend(bbox_to_anchor=(0.95,1.3),frameon=False)
+        ax11.legend(bbox_to_anchor=(0.95,1.4),frameon=False)
         ax11.set_ylim([1e-23,1e-20])
         ax1.set_xlim([0.05, 5e4])
         st.pyplot(fig1)
