@@ -13,7 +13,7 @@ yr  = 365.*24.*60.*60.
 pc  = constants.pc.cgs.value
 
 #path= '/Users/lengoctram/Documents/postdoc/MPIfR/research/dustpol/src_v1.5/DustPOL-RAT+MRAT+2-layer_original/'#os.getcwd()
-path = os.getcwd()+'/DustPOL/'
+path = os.getcwd()+'/DustPOL-py/'
 
 ## -------------------------------------------------------------------------
 ## Experiment setup
