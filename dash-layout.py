@@ -121,7 +121,7 @@ else:
     fmaxs=[0.0]
 
 with col1:
-    c1,c2,c3=st.columns(3)
+    c1,c2=st.columns(2)
     button = c1.button("Clear All Caches")
     if button:   
         st.cache_data.clear()
