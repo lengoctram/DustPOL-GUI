@@ -5,7 +5,6 @@ import sys
 import matplotlib.pyplot as plt
 from astropy.io import ascii
 import importlib
-import scipy
 
 # ----------------------------------------------------------------------------------------- #
 # Execute DustPOL-py
