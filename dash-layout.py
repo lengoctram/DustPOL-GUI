@@ -106,13 +106,13 @@ if rat_theory == 'MRAT':
     Ncl = st.sidebar.slider('Specify Ncl', 10., 1.e5, 10., format='%.1e')
 
 ratd,Smax=('off',-1.e-99)
-c1,c2=st.sidebar.columns(2)
+c1,c2,c3=st.sidebar.columns(3)
 with c1:
     ratd = c1.checkbox('RAT-D mechanism')
     if (ratd):
         ratd='on'
         Smax=c2.selectbox('Smax',[1e5,1e6,1e7,1e8,1e9,1e10],format_func=lambda x: '{:.1e}'.format(x))
-        with c2.expander("Definition"):
+        with c3.expander("Definition"):
             st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
             ''')
 # Row A
