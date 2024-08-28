@@ -113,8 +113,11 @@ U_rads = col1.multiselect('Select radiation field (U)', list(np.arange(0.,10.,1)
 #         with $u_{\\lambda}$ the radiation spectrum. For a typical aISRF, $U=1$.
 #     ''')
 ngass = np.array(col2.multiselect('Select gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
-fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [0.25, 0.5, 1.0])
 
+if rat_theory == 'RAT':
+    fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [0.25, 0.5, 1.0])
+else:
+    fmaxs=[np.nan]
 st.divider()
 
 def plot_figures():
@@ -151,18 +154,27 @@ def plot_figures():
                     w, pext, pem, A_per_Ngas = results
                     # smooth pext (for visualization) -- not physically affected
                     pext = savgol_filter(pext,20,2)
-                    ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    if rat_theory == 'RAT':
+                        ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    else:
+                        ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')                        
                     if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
                     else:
                         ax11.loglog(w*1e-4,np.ones(len(w)),label='pol. spectrum')
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='Extinction curve')
-                    ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    if rat_theory == 'RAT':
+                        ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    else:
+                        ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
                 elif p_plot_option == 'Starlight Polarization':
                     w, pext,A_per_Ngas = results
                     # smooth pext (for visualization) -- not physically effect
                     pext = savgol_filter(pext,20,2)
-                    ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    if rat_theory == 'RAT':
+                        ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    else:
+                        ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
                     if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
                     else:
@@ -170,7 +182,10 @@ def plot_figures():
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='$\\rm Extinction\\, curve$')
                 elif p_plot_option == 'Thermal dust Polarization':
                     w, pem = results
-                    ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    if rat_theory == 'RAT':
+                        ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    else:
+                        ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
                 A_per_Ngas_pre = A_per_Ngas/A_per_Ngas.max()
 
     if ax1:
