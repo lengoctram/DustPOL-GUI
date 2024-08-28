@@ -1,5 +1,4 @@
 streamlit
-python
 matplotlib
 numpy
 astropy
