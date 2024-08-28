@@ -25,7 +25,7 @@ yr  = 365.*24.*60.*60.
 #amax = arange[-1]#1. *1.e-4 # [cm]
 # w
 def wave(path):
-    filename = path+"data/LAMBDA.DAT"
+    filename = path+"data/sil_car/LAMBDA.DAT"
     q = genfromtxt(filename,skip_header = 4, dtype=['float'],names=['wave'], usecols= (0))
     w = q['wave'] *1e-4       # in cm
     return w
