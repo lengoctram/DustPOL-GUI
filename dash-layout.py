@@ -107,11 +107,11 @@ if rat_theory == 'MRAT':
 st.markdown('### Parameters')
 col1, col2, col3 = st.columns(3)
 U_rads = col1.multiselect('Select radiation field (U)', list(np.arange(0.,10.,1))+list(np.arange(10.,500.,20)))
-with col1.expander("See explanation"):
-    st.write('''
-        $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,erg\\,cm^{-3}}$
-        with $u_{\\lambda}$ the radiation spectrum. For a typical aISRF, $U=1$.
-    ''')
+# with col1.expander("See explanation"):
+#     st.write('''
+#         $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,erg\\,cm^{-3}}$
+#         with $u_{\\lambda}$ the radiation spectrum. For a typical aISRF, $U=1$.
+#     ''')
 ngass = np.array(col2.multiselect('Select gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
 fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [0.25, 0.5, 1.0])
 
