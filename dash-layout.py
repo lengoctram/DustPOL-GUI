@@ -123,7 +123,7 @@ def plot_figures():
     fig1, ax1, fig2, ax2 = None, None, None, None
     if p_plot_option in ['Starlight Polarization', 'Both']:
         fig1, ax1 = plt.subplots(figsize=(12, 3))
-        ax1.set_xlabel('$\\rm wavelength\\,(um)$')
+        ax1.set_xlabel('$\\rm wavelength\\,(\\mu m)$')
         ax1.set_ylabel('$\\rm p_{ext}/N_{H}\\,(\\%/cm^{-2})$')
         ax1.set_title('$\\rm Starlight\\,Polarization$',pad=20)
         ax11=ax1.twinx()
