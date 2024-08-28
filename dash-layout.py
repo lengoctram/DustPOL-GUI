@@ -113,7 +113,7 @@ with c1:
         ratd='on'
         Smax=c2.selectbox('Smax',[1e5,1e6,1e7,1e8,1e9,1e10],format_func=lambda x: '{:.1e}'.format(x))
         with c2.expander("Definition"):
-            st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$ -- characterizing grain's porosity)
+            st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
             ''')
 # Row A
 st.markdown('### Parameters')
