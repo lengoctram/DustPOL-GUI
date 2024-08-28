@@ -117,7 +117,7 @@ ngass = np.array(col2.multiselect('Select gas volume density (ngas)', [1e1,1e2,1
 if rat_theory == 'RAT':
     fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [0.25, 0.5, 1.0])
 else:
-    fmaxs=[np.nan]
+    fmaxs=[0.0]
 st.divider()
 
 def plot_figures():
