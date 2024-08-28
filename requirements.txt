@@ -2,5 +2,3 @@ streamlit
 matplotlib
 astropy
 scipy
-texlive
-latex
