@@ -148,8 +148,8 @@ def plot_figures():
                     if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
                     else:
-                        ax11.loglog(w*1e-4,np.ones(len(w)),label='$\\sf pol.\\,spectrum$')
-                        ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='$\\sf Extinction\\, curve$')
+                        ax11.loglog(w*1e-4,np.ones(len(w)),label='pol. spectrum')
+                        ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='Extinction curve')
                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                 elif p_plot_option == 'Starlight Polarization':
                     w, pext,A_per_Ngas = results
@@ -166,7 +166,7 @@ def plot_figures():
 
     if ax1:
         ax1.legend(frameon=False)
-        ax11.legend(bbox_to_anchor=(0.95,1.3))
+        ax11.legend(bbox_to_anchor=(0.95,1.3),frameon=False)
         ax11.set_ylim([1e-23,1e-20])
         ax1.set_xlim([0.05, 5e4])
         st.pyplot(fig1)
