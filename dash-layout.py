@@ -147,7 +147,7 @@ def plot_figures():
                     w, pext, pem, A_per_Ngas = results
                     w_new = np.logspace(np.log10(w[0]),np.log10(w[-1]),1000)
                     ## smooth pext
-                    pext=scipy.interp1d(w,pext,kind='cubic')(w_new)
+                    pext=scipy.interpolate.interp1d(w,pext,kind='cubic')(w_new)
                     ax1.semilogx(w_new * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                     if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
