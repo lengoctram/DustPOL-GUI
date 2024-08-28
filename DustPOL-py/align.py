@@ -256,7 +256,7 @@ def f_highJ(delta_mag, fhiJ_RAT):
     elif(delta_mag > 1):
         f_hiJ = 0.5
     else:
-        f_hiJ = fhiJ_RAT
+        f_hiJ = 0.25#fhiJ_RAT
     #
     return f_hiJ
 #
