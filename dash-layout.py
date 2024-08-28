@@ -47,7 +47,7 @@ def execute_DustPOL(U_rad, ngas, fmax, grain_type, grain_shape, amax, amin, rat_
         return [w, psil, A_per_Ngas] if composition_plot_option in ['Silicate', 'Astrodust'] else [w, ptot, A_per_Ngas]
     elif p_plot_option == 'Thermal dust Polarization':
         w, I_list, p_list = args.cal_pol_emi()
-        return [w, p_list[0]] if composition_plot_option in ['Silicate', 'Astrodust'] else [w,p_list[1]]
+        return [w, p_list[0], A_per_Ngas] if composition_plot_option in ['Silicate', 'Astrodust'] else [w,p_list[1],A_per_Ngas]
     else: #Both
         w, psil, ptot = args.cal_pol_abs()
         w, I_list, p_list = args.cal_pol_emi()
@@ -195,7 +195,7 @@ def plot_figures():
                         ax11.loglog(w*1e-4,np.ones(len(w)),label='$\\rm pol.\\,spectrum$')
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='$\\rm Extinction\\, curve$')
                 elif p_plot_option == 'Thermal dust Polarization':
-                    w, pem = results
+                    w, pem, A_per_Ngas = results
                     if rat_theory == 'RAT':
                         ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                     else:
