@@ -144,7 +144,7 @@ def plot_figures():
                 results = execute_DustPOL(U_rad, n_gas, f_max, grain_type, grain_shape, amax, amin, rat_theory, Bfield, Ncl,p_plot_option)
                 if p_plot_option == 'Both':
                     w, pext, pem, A_per_Ngas = results
-                    pext_new = savgol_filter(pext,35,2)
+                    pext_new = savgol_filter(pext,20,2)
                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                     ax1.semilogx(w * 1e4, pext_new / n_gas, label=f'smooth')
 
