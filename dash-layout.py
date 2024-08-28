@@ -9,7 +9,7 @@ from scipy.signal import savgol_filter
 # ----------------------------------------------------------------------------------------- #
 # Execute DustPOL-py
 # ----------------------------------------------------------------------------------------- #
-@st.cache_data(persist="disk")
+@st.cache_data(persist="disk",ttl=300,max_entries=1000,how_spinner="Executing DustPOL-py ...")
 def execute_DustPOL(U_rad, ngas, fmax, grain_type, grain_shape, amax, amin, rat_theory, Bfield, Ncl, p_plot_option):
     dir_dustpol = os.getcwd()+'/DustPOL-py/'
     sys.path.insert(1, dir_dustpol)
