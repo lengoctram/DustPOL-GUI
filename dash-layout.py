@@ -131,7 +131,7 @@ def plot_figures():
 
     if p_plot_option in ['Thermal dust Polarization', 'Both']:
         fig2, ax2 = plt.subplots(figsize=(12, 3))
-        ax2.set_xlabel('$\\rm wavelength\\,(um m)$')
+        ax2.set_xlabel('$\\rm wavelength\\,(\\mu m)$')
         ax2.set_ylabel('$\\rm p_{em}\\,(\\%)$')
         ax2.set_title('$\\rm Thermal\\,Polarization$',pad=20)
         ax22=ax2.secondary_yaxis('right')
