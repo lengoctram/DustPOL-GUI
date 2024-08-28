@@ -187,8 +187,11 @@ link3='https://arxiv.org/abs/2403.17088'
 
 st.sidebar.markdown('''
 ---
-Model details: please refer to [1](%s)[2](%s)[3](%s)
-''')%(link1,link2,link3)
+Model details: please refer to \\
+https://ui.adsabs.harvard.edu/abs/2020ApJ...896...44L \\
+https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T \\
+https://arxiv.org/abs/2403.17088
+''')
 st.divider()
 st.sidebar.markdown('''
 ---
