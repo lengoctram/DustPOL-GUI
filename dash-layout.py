@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import os
 import sys
-import matplotlib
 import matplotlib.pyplot as plt
 from astropy.io import ascii
 import importlib
