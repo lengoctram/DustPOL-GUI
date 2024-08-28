@@ -9,7 +9,7 @@ from scipy.signal import savgol_filter
 # ----------------------------------------------------------------------------------------- #
 # Execute DustPOL-py
 # ----------------------------------------------------------------------------------------- #
-@st.cache_data
+@st.cache_data(persist="disk")
 def execute_DustPOL(U_rad, ngas, fmax, grain_type, grain_shape, amax, amin, rat_theory, Bfield, Ncl, p_plot_option):
     dir_dustpol = os.getcwd()+'/DustPOL-py/'
     sys.path.insert(1, dir_dustpol)
@@ -120,6 +120,7 @@ else:
     fmaxs=[0.0]
 st.divider()
 
+@st.cache_data
 def plot_figures():
     col_count = 10
     if p_plot_option == 'Both':
@@ -200,10 +201,7 @@ def plot_figures():
         st.pyplot(fig2)
 
 plot_figures()
-
-link1='https://ui.adsabs.harvard.edu/abs/2020ApJ...896...44L'
-link2='https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T'
-link3='https://arxiv.org/abs/2403.17088'
+plot_figure.clear()
 
 st.sidebar.markdown('''
 ---
