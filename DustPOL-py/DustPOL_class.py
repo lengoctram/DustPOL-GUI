@@ -131,8 +131,8 @@ class DustPOL:
                 num_cols=8
             else:
                 log.error('Values of alpha is not regconized! [\033[1;5;7;91m failed \033[0m]')
-            self.Data_sil = rad_func.readDC(self.path+'data/Q_aSil2001_'+str(self.alpha)+'_p20B.DAT',hdr_lines,skip_lines,len_a_sil,len_w,num_cols)
-            self.Data_mCBE = rad_func.readDC(self.path+'data/Q_amCBE_'+str(self.alpha)+'.DAT',hdr_lines,skip_lines,len_a_car,len_w,num_cols)
+            self.Data_sil = rad_func.readDC(self.path+'data/sil_car/Q_aSil2001_'+str(self.alpha)+'_p20B.DAT',hdr_lines,skip_lines,len_a_sil,len_w,num_cols)
+            self.Data_mCBE = rad_func.readDC(self.path+'data/sil_car/Q_amCBE_'+str(self.alpha)+'.DAT',hdr_lines,skip_lines,len_a_car,len_w,num_cols)
         self.get_coefficients_files()
         
         # ------- Initialization grain-size distribution -------
