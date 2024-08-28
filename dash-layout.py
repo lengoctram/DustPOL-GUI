@@ -180,13 +180,15 @@ def plot_figures():
         st.pyplot(fig2)
 
 plot_figures()
+
+link1='https://ui.adsabs.harvard.edu/abs/2020ApJ...896...44L'
+link2='https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T'
+link3='https://arxiv.org/abs/2403.17088'
+
 st.sidebar.markdown('''
 ---
-Model details: please refer to \\
-1- Lee et al. (2020) https://ui.adsabs.harvard.edu/abs/2020ApJ...896...44L \\
-2- Tram et al. (2021) https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T \\
-3- Tram et al. (2024) https://arxiv.org/abs/2403.17088 (accepted to A&A).
-''')
+Model details: please refer to [1](%s)[2](%s)[3](%s)
+''')%(link1,link2,link3)
 st.divider()
 st.sidebar.markdown('''
 ---
