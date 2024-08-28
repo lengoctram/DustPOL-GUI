@@ -144,7 +144,7 @@ def plot_figures():
                 results = execute_DustPOL(U_rad, n_gas, f_max, grain_type, grain_shape, amax, amin, rat_theory, Bfield, Ncl,p_plot_option)
                 if p_plot_option == 'Both':
                     w, pext, pem, A_per_Ngas = results
-                    # smooth pext (for visualization) -- don't physically effected
+                    # smooth pext (for visualization) -- not physically affected
                     pext = savgol_filter(pext,20,2)
                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                     if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
@@ -155,6 +155,8 @@ def plot_figures():
                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                 elif p_plot_option == 'Starlight Polarization':
                     w, pext,A_per_Ngas = results
+                    # smooth pext (for visualization) -- not physically effect
+                    pext = savgol_filter(pext,20,2)
                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                     if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
