@@ -3,8 +3,6 @@ from read import *
 import scipy.integrate as integrate
 import warnings
 #from common import path
-from joblib import Parallel, delayed#, Memory
-
 #suppress warnings
 warnings.filterwarnings('ignore')
 
