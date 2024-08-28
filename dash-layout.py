@@ -112,9 +112,6 @@ with col1.expander("See explanation"):
         $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,erg\\,cm^{-3}}$
         with $u_{\\lambda}$ the radiation spectrum. For a typical aISRF, $U=1$.
     ''')
-button = col1.button("Clear All Caches")
-if button:   
-    st.cache_data.clear()
 
 ngass = np.array(col2.multiselect('Select gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
 
@@ -122,6 +119,15 @@ if rat_theory == 'RAT':
     fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [0.25, 0.5, 1.0])
 else:
     fmaxs=[0.0]
+
+with col1:
+    c1,c2,c3=st.columns(3)
+    button = c1.button("Clear All Caches")
+    if button:   
+        st.cache_data.clear()
+    with c2.expander("explanation"):
+        st.write('To clear all caches. Recommended after a few runs!')
+        
 st.divider()
 
 def plot_figures():
