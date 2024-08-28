@@ -121,7 +121,7 @@ else:
     fmaxs=[0.0]
 with col3.expander("See explanation"):
     st.write('''
-    For MRAT theory, f$_{\\rm max}$ is extimated by the Bfield strength and Ncl
+    For MRAT theory, f$_{\\rm max}$ is estimated by the Bfield strength and Ncl
     ''')
 
 with col1:
