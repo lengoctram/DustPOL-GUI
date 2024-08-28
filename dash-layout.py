@@ -182,7 +182,7 @@ def plot_figures():
 plot_figures()
 st.sidebar.markdown('''
 ---
-Model details: please refer to 
+Model details: please refer to \\
 1- Lee et al. (2020) https://ui.adsabs.harvard.edu/abs/2020ApJ...896...44L
 2- Tram et al. (2021) https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T
 3- Tram et al. (2024) https://arxiv.org/abs/2403.17088 (accepted to A&A) at: https://github.com/lengoctram/DustPOL-py).
