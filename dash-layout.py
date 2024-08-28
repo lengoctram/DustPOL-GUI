@@ -71,8 +71,8 @@ st.sidebar.divider()
 # Header - grain size
 st.sidebar.header('Grain size')
 col1, col2 = st.sidebar.columns(2)
-amax = col1.selectbox('Maximum size ($\\mu$m):', [0.1, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.5, 2.0], index=9)
-amin = col2.selectbox('Minimum size ($\\mu$m):', np.linspace(3.1e-4,amax+0.01*amax,20), index=0, format_func=lambda x: '{:.1e}'.format(x))
+amax = col1.selectbox('Maximum size (um):', [0.1, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.5, 2.0], index=9)
+amin = col2.selectbox('Minimum size (um):', np.linspace(3.1e-4,amax+0.01*amax,20), index=0, format_func=lambda x: '{:.1e}'.format(x))
 st.sidebar.divider()
 
 # Header - grain composition
@@ -98,7 +98,7 @@ rat_theory = st.sidebar.selectbox('Select theory of RAT alignment', ('RAT', 'MRA
 Bfield, Ncl = (np.nan, np.nan)
 if rat_theory == 'MRAT':
     st.sidebar.subheader('B-field strength')
-    Bfield = st.sidebar.number_input('B[$\\mu G$]', value=600.0, step=10.0)
+    Bfield = st.sidebar.number_input('B[$uG$]', value=600.0, step=10.0)
     
     st.sidebar.subheader('Number of iron cluster (Ncl)')
     Ncl = st.sidebar.slider('Specify Ncl', 10., 1.e5, 10., format='%.1e')
@@ -123,7 +123,7 @@ def plot_figures():
     fig1, ax1, fig2, ax2 = None, None, None, None
     if p_plot_option in ['Starlight Polarization', 'Both']:
         fig1, ax1 = plt.subplots(figsize=(12, 3))
-        ax1.set_xlabel('$\\rm wavelength\\,(\\mu m)$')
+        ax1.set_xlabel('$\\rm wavelength\\,(um)$')
         ax1.set_ylabel('$\\rm p_{ext}/N_{H}\\,(\\%/cm^{-2})$')
         ax1.set_title('$\\sf Starlight\\,Polarization$',pad=20)
         ax11=ax1.twinx()
@@ -131,7 +131,7 @@ def plot_figures():
 
     if p_plot_option in ['Thermal dust Polarization', 'Both']:
         fig2, ax2 = plt.subplots(figsize=(12, 3))
-        ax2.set_xlabel('$\\rm wavelength\\,(\\mu m)$')
+        ax2.set_xlabel('$\\rm wavelength\\,(um m)$')
         ax2.set_ylabel('$\\rm p_{em}\\,(\\%)$')
         ax2.set_title('$\\sf Thermal\\,Polarization$',pad=20)
         ax22=ax2.secondary_yaxis('right')
