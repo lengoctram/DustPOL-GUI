@@ -120,7 +120,6 @@ else:
     fmaxs=[0.0]
 st.divider()
 
-@st.cache_data
 def plot_figures():
     col_count = 10
     if p_plot_option == 'Both':
