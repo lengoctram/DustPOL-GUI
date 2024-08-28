@@ -200,6 +200,8 @@ def plot_figures():
         st.pyplot(fig2)
 
 plot_figures()
+st.cache_data.clear()
+st.cache_resource.clear()
 
 link1='https://ui.adsabs.harvard.edu/abs/2020ApJ...896...44L'
 link2='https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T'
