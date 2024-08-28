@@ -166,7 +166,7 @@ def plot_figures():
 
     if ax1:
         ax1.legend(frameon=False)
-        ax11.legend(bbox_to_anchor=(0.95,1.4),frameon=False)
+        ax11.legend(bbox_to_anchor=(0.95,1.35),frameon=False)
         ax11.set_ylim([1e-23,1e-20])
         ax1.set_xlim([0.05, 5e4])
         st.pyplot(fig1)
