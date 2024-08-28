@@ -1,6 +1,6 @@
 # DustPOL-GUI
 
--- This is an web-app for executing and visualling the DustPOL-py model (modelling multi-wavelength polarization degree of starlight and thermal dust emission) 
+-- This is a web app for executing and visualizing the DustPOL-py model (modeling multi-wavelength polarization degree of starlight and thermal dust emission) 
 based on Radiative Torque alignment paradigm
 
 -- The science DustPOL-py model is at: [github.com/lengoctram/dustpol](https://github.com/lengoctram/DustPOL-py)
