@@ -146,9 +146,7 @@ button = c1.button("Clear All Caches")
 if button:   
     st.cache_data.clear()
 with c2.expander("explanation"):
-    st.write('To clear all memory caches. 
-    Caches are on you're disk and it is recommended to clear them all after a while!
-    ')
+    st.write('To clear all memory caches. Caches are on you're disk and it is recommended to clear them all after a while!')
         
 def plot_figures():
     col_count = 10
