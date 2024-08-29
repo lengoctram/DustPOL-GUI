@@ -134,7 +134,11 @@ with col1.expander("See explanation"):
     ''')
 
 ngass = np.array(col2.multiselect('Multiselect gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
-
+with col2.expander("See explanation"):
+    st.write('''
+    n$_{\\rm gas}$ is in unit of $cm^{-3}$
+    ''')
+    
 if rat_theory == 'RAT':
     fmaxs = col3.multiselect('Multiselect max. alignment efficiency (fmax)', [0.25, 0.5, 1.0])
 else:
