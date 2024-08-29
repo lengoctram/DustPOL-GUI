@@ -108,16 +108,15 @@ if rat_theory == 'MRAT':
     st.sidebar.subheader('Number of iron cluster (Ncl)')
     Ncl = st.sidebar.slider('Specify Ncl', 10., 1.e5, 10., format='%.1e')
 
-ratd,Smax=('off',-1.e-99)
-# c1,c2,c3=st.sidebar.columns(3)
-# with c1:
-#     ratd = c1.checkbox('RAT-D')
-#     if (ratd):
-#         ratd='on'
-#         Smax=c2.selectbox('Smax',[1e5,1e6,1e7,1e8,1e9,1e10],format_func=lambda x: '{:.1e}'.format(x))
-#         with c3.expander("Definition"):
-#             st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
-#             ''')
+ratd,Smax=(False,-1.e-99)
+c1,c2,c3=st.sidebar.columns(3)
+with c1:
+    ratd = c1.checkbox('RAT-D')
+    if (ratd):
+        Smax=c2.selectbox('Smax',[1e5,1e6,1e7,1e8,1e9,1e10],format_func=lambda x: '{:.1e}'.format(x),index=3)
+        with c3.expander("Definition"):
+            st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
+            ''')
 
 st.sidebar.divider()
 button = st.sidebar.button("Clear All Caches")
@@ -179,49 +178,89 @@ def plot_figures():
         ax2.set_title('$\\rm Thermal\\,Polarization$',pad=20)
         ax22=ax2.secondary_yaxis('right')
         ax22.set_ylabel('$\\rm p_{em}\\,(\\%)$')
-        
-    A_per_Ngas_pre=0.0
+
+    # A_per_Ngas_pre=0.0
+    first=True
     for U_rad in U_rads:
         for n_gas in ngass: 
             for f_max in fmaxs:
                 results = execute_DustPOL(U_rad, n_gas, f_max, grain_type, grain_shape, amax, amin, rat_theory, ratd, Smax, Bfield, Ncl,p_plot_option)
                 if p_plot_option == 'Both':
                     w, pext, pem, A_per_Ngas = results
-                    # smooth pext (for visualization) -- not physically affected
-                    pext = savgol_filter(pext,20,2)
-                    if rat_theory == 'RAT':
-                        ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
+                 
+                    if (ratd):
+                        ax11.loglog(w * 1e4, A_per_Ngas,ls='--')
                     else:
-                        ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')                        
-                    if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
-                    else:
-                        ax11.loglog(w*1e-4,np.ones(len(w)),label='pol. spectrum')
-                        ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='Extinction curve')
-                    if rat_theory == 'RAT':
-                        ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
-                    else:
-                        ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
+
+                    if (first):
+                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='-',label='$\\sf pol.\\,spectrum$')
+                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='--',label='$\\sf Extinction\\, curve$')
+                        
+                    ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                
                 elif p_plot_option == 'Starlight Polarization':
                     w, pext,A_per_Ngas = results
-                    # smooth pext (for visualization) -- not physically effect
-                    pext = savgol_filter(pext,20,2)
-                    if rat_theory == 'RAT':
-                        ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                    ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                
+                    if (ratd):
+                        ax11.loglog(w * 1e4, A_per_Ngas,ls='--')
                     else:
-                        ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
-                    if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
-                    else:
-                        ax11.loglog(w*1e-4,np.ones(len(w)),label='$\\rm pol.\\,spectrum$')
-                        ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='$\\rm Extinction\\, curve$')
+
+                    if (first):
+                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='-',label='$\\sf pol.\\,spectrum$')
+                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='--',label='$\\sf Extinction\\, curve$')
+                   
                 elif p_plot_option == 'Thermal dust Polarization':
                     w, pem, A_per_Ngas = results
-                    if rat_theory == 'RAT':
-                        ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
-                    else:
-                        ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
-                A_per_Ngas_pre = A_per_Ngas/A_per_Ngas.max()
+                    ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+                first=False
+                
+    # A_per_Ngas_pre=0.0
+    # for U_rad in U_rads:
+    #     for n_gas in ngass: 
+    #         for f_max in fmaxs:
+    #             results = execute_DustPOL(U_rad, n_gas, f_max, grain_type, grain_shape, amax, amin, rat_theory, ratd, Smax, Bfield, Ncl,p_plot_option)
+    #             if p_plot_option == 'Both':
+    #                 w, pext, pem, A_per_Ngas = results
+    #                 # smooth pext (for visualization) -- not physically affected
+    #                 pext = savgol_filter(pext,20,2)
+    #                 if rat_theory == 'RAT':
+    #                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+    #                 else:
+    #                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')                        
+    #                 if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
+    #                     ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
+    #                 else:
+    #                     ax11.loglog(w*1e-4,np.ones(len(w)),label='pol. spectrum')
+    #                     ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='Extinction curve')
+    #                 if rat_theory == 'RAT':
+    #                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+    #                 else:
+    #                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
+    #             elif p_plot_option == 'Starlight Polarization':
+    #                 w, pext,A_per_Ngas = results
+    #                 # smooth pext (for visualization) -- not physically effect
+    #                 pext = savgol_filter(pext,20,2)
+    #                 if rat_theory == 'RAT':
+    #                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+    #                 else:
+    #                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
+    #                 if np.sum(abs(A_per_Ngas/A_per_Ngas.max()-A_per_Ngas_pre))<=1e-19:
+    #                     ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
+    #                 else:
+    #                     ax11.loglog(w*1e-4,np.ones(len(w)),label='$\\rm pol.\\,spectrum$')
+    #                     ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--',label='$\\rm Extinction\\, curve$')
+    #             elif p_plot_option == 'Thermal dust Polarization':
+    #                 w, pem, A_per_Ngas = results
+    #                 if rat_theory == 'RAT':
+    #                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
+    #                 else:
+    #                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e}')
+    #             A_per_Ngas_pre = A_per_Ngas/A_per_Ngas.max()
 
     if ax1:
         ax1.legend(frameon=False)
