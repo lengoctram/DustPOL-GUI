@@ -116,10 +116,14 @@ with c1:
     ratd = c1.checkbox('RAT-D')
     if (ratd):
         Smax=c2.selectbox('Smax',[1e5,1e6,1e7,1e8,1e9,1e10],format_func=lambda x: '{:.1e}'.format(x),index=3)
-with st.sidebar.expander("Definition"):
+c1,c2=st.sidebar.columns(2)
+with c1.expander("Explanation"):
+    st.write('''Turn on/off the rotational disruption -->> contrainning the $a_{\\rm max}$
+    ''')
+with c2.expander("Explanation"):
     st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
     ''')
-
+    
 st.sidebar.divider()
 button = st.sidebar.button("Clear All Caches")
 if button:   
