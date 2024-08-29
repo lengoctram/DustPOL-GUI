@@ -100,6 +100,7 @@ st.sidebar.divider()
 st.sidebar.header('Alignment Theory')
 rat_theory = st.sidebar.selectbox('Select theory of RAT alignment', ('RAT', 'MRAT'))
 
+# Sub-header -- MRAT
 Bfield, Ncl = (np.nan, np.nan)
 if rat_theory == 'MRAT':
     st.sidebar.subheader('B-field strength')
@@ -108,15 +109,16 @@ if rat_theory == 'MRAT':
     st.sidebar.subheader('Number of iron cluster (Ncl)')
     Ncl = st.sidebar.slider('Specify Ncl', 10., 1.e5, 10., format='%.1e')
 
+# Sub-header -- RAT-D
 ratd,Smax=(False,-1.e-99)
-c1,c2,c3=st.sidebar.columns(3)
+c1,c2=st.sidebar.columns(2)
 with c1:
     ratd = c1.checkbox('RAT-D')
     if (ratd):
         Smax=c2.selectbox('Smax',[1e5,1e6,1e7,1e8,1e9,1e10],format_func=lambda x: '{:.1e}'.format(x),index=3)
-        with c3.expander("Definition"):
-            st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
-            ''')
+with st.sidebar.expander("Definition"):
+    st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
+    ''')
 
 st.sidebar.divider()
 button = st.sidebar.button("Clear All Caches")
@@ -196,8 +198,8 @@ def plot_figures():
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
 
                     if (first):
-                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='-',label='$\\sf pol.\\,spectrum$')
-                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='--',label='$\\sf Extinction\\, curve$')
+                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='-',label='$\\rm pol.\\,spectrum$')
+                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='--',label='$\\rm Extinction\\, curve$')
                         
                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                 
@@ -211,8 +213,8 @@ def plot_figures():
                         ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
 
                     if (first):
-                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='-',label='$\\sf pol.\\,spectrum$')
-                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='--',label='$\\sf Extinction\\, curve$')
+                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='-',label='$\\rm pol.\\,spectrum$')
+                        ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='--',label='$\\rm Extinction\\, curve$')
                    
                 elif p_plot_option == 'Thermal dust Polarization':
                     w, pem, A_per_Ngas = results
