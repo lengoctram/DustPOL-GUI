@@ -188,7 +188,6 @@ def plot_figures():
 
     first=True
     ii=0
-    bar = st.progress(ii)
     for U_rad in U_rads:
         for n_gas in ngass: 
             for f_max in fmaxs:
@@ -221,13 +220,12 @@ def plot_figures():
                     if (first):
                         ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='-',label='$\\rm pol.\\,spectrum$')
                         ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='--',label='$\\rm Extinction\\, curve$')
-                   
+                    ii+=1
+                    bar = st.progress(ii)
                 elif p_plot_option == 'Thermal dust Polarization':
                     w, pem, A_per_Ngas = results
                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                 first=False
-                ii+=1
-                bar = st.progress(ii)
                 
     # A_per_Ngas_pre=0.0
     # for U_rad in U_rads:
