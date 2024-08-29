@@ -133,7 +133,7 @@ if rat_theory == 'RAT':
 else:
     fmaxs=[0.0]
     st.session_state.disable_opt = True
-    fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [],disabled=st.session_state.disable_opt)
+    col3.multiselect('Select maximum alignment efficiency (fmax)', [],disabled=st.session_state.disable_opt)
 with col3.expander("See explanation"):
     st.write('''
     For MRAT theory, f$_{\\rm max}$ is estimated by the Bfield strength and Ncl
