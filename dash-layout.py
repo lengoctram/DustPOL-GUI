@@ -194,6 +194,8 @@ def plot_figures():
                 results = execute_DustPOL(U_rad, n_gas, f_max, grain_type, grain_shape, amax, amin, rat_theory, ratd, Smax, Bfield, Ncl,p_plot_option)
                 if p_plot_option == 'Both':
                     w, pext, pem, A_per_Ngas = results
+                    
+                    pext = savgol_filter(pext,20,2) # smooth pext (for visualization) -- not physically affected
                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                     ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
                  
@@ -210,6 +212,8 @@ def plot_figures():
                 
                 elif p_plot_option == 'Starlight Polarization':
                     w, pext,A_per_Ngas = results
+
+                    pext = savgol_filter(pext,20,2) # smooth pext (for visualization) -- not physically affected
                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                 
                     if (ratd):
