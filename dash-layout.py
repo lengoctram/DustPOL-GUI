@@ -111,7 +111,7 @@ if rat_theory == 'MRAT':
 
 # Sub-header -- RAT-D
 ratd,Smax=(False,-1.e-99)
-c1,c2=st.sidebar.beta_columns(2)#st.sidebar.columns(2)
+c1,c2=st.sidebar.columns(2)
 with c1:
     ratd = c1.checkbox('RAT-D')
     if (ratd):
@@ -185,8 +185,10 @@ def plot_figures():
         ax22=ax2.secondary_yaxis('right')
         ax22.set_ylabel('$\\rm p_{em}\\,(\\%)$')
 
-    # A_per_Ngas_pre=0.0
+
     first=True
+    ii=0
+    bar = st.progress(ii)
     for U_rad in U_rads:
         for n_gas in ngass: 
             for f_max in fmaxs:
@@ -224,6 +226,8 @@ def plot_figures():
                     w, pem, A_per_Ngas = results
                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                 first=False
+                ii+=1
+                bar = st.progress(ii)
                 
     # A_per_Ngas_pre=0.0
     # for U_rad in U_rads:
