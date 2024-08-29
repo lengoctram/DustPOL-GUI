@@ -151,7 +151,7 @@ class DustPOL:
             raise ValueError('SORRY - amax should be %.5f [um] at most [\033[1;5;7;91m failed \033[0m]'%(max(a)*1e4))
 
         self.lmin = np.searchsorted(a, self.amin)
-        self.lmax = np.searchsorted(a, min(self.amax, disrupt.radiative_disruption(self).a_disrupt(a))) if self.ratd == 'on' else np.searchsorted(a, self.amax + 0.1 * self.amax)
+        self.lmax = np.searchsorted(a, min(self.amax, disrupt.radiative_disruption(self).a_disrupt(a))) if self.ratd else np.searchsorted(a, self.amax + 0.1 * self.amax)
 
         self.a = a[self.lmin:self.lmax]
         self.na = len(self.a)
