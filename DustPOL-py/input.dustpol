@@ -1,6 +1,6 @@
 names params
 cloud starless
-ratd off
+ratd False
 wave 850
 rin 1700.
 rout 1.248e5
