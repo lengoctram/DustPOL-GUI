@@ -116,6 +116,12 @@ ratd,Smax=('off',-1.e-99)
 #             st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
 #             ''')
 
+button = st.sidebar.button("Clear All Caches")
+if button:   
+    st.cache_data.clear()
+with st.sidebar.expander("explanation"):
+    st.write('To clear all memory caches. Caches are on your disk and it is recommended to clear them all after a while!')
+
 # Row A
 st.markdown('### Parameters')
 col1, col2, col3 = st.columns(3)
@@ -141,13 +147,6 @@ with col3.expander("See explanation"):
         
 st.divider()
 
-c1,c2,_=st.columns(3)
-button = c1.button("Clear All Caches")
-if button:   
-    st.cache_data.clear()
-with c2.expander("explanation"):
-    st.write('To clear all memory caches. Caches are on your disk and it is recommended to clear them all after a while!')
-        
 def plot_figures():
     col_count = 10
     if p_plot_option == 'Both':
