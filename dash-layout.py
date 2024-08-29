@@ -129,14 +129,14 @@ col1, col2, col3 = st.columns(3)
 U_rads = col1.multiselect('Multiselect radiation field (U)', list(np.arange(0.,10.,1))+list(np.arange(10.,500.,20)))
 with col1.expander("See explanation"):
     st.write('''
-        $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,erg\\,cm^{-3}}$
+        $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,\\rm erg\\,cm^{-3}}$
         with $u_{\\lambda}$ the radiation spectrum. For a typical aISRF, $U=1$.
     ''')
 
 ngass = np.array(col2.multiselect('Multiselect gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
 with col2.expander("See explanation"):
     st.write('''
-    n$_{\\rm gas}$ is in unit of $cm^{-3}$
+    n$_{\\rm gas}$ is in unit of $\\rm cm^{-3}$
     ''')
     
 if rat_theory == 'RAT':
