@@ -121,8 +121,7 @@ button = st.sidebar.button("Clear All Caches")
 if button:   
     st.cache_data.clear()
 with st.sidebar.expander("explanation"):
-    st.write('To clear all memory caches. 
-    Caches are on your disk and it is recommended to clear them all after a while!')
+    st.write('To clear all memory caches. Caches are on your disk and it is recommended to clear them all after a while!')
 
 # Row A
 st.markdown('### Parameters')
