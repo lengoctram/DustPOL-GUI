@@ -111,7 +111,7 @@ if rat_theory == 'MRAT':
 
 # Sub-header -- RAT-D
 ratd,Smax=(False,-1.e-99)
-c1,c2=st.sidebar.columns(2)
+c1,c2=st.sidebar.beta_columns(2)#st.sidebar.columns(2)
 with c1:
     ratd = c1.checkbox('RAT-D')
     if (ratd):
