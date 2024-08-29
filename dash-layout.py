@@ -64,7 +64,7 @@ with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 _,cen,_=st.sidebar.columns(3)
-cen.image("dustpol-logo.png", use_column_width=True)
+cen.image("dustpol-logo.png", width=300, use_column_width=True)
 
 # st.sidebar.title('Visualization `DustPOL-py`')
 
