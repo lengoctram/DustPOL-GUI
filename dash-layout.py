@@ -119,17 +119,17 @@ ratd,Smax=('off',-1.e-99)
 # Row A
 st.markdown('### Parameters')
 col1, col2, col3 = st.columns(3)
-U_rads = col1.multiselect('Select radiation field (U)', list(np.arange(0.,10.,1))+list(np.arange(10.,500.,20)))
+U_rads = col1.multiselect('Multiselect radiation field (U)', list(np.arange(0.,10.,1))+list(np.arange(10.,500.,20)))
 with col1.expander("See explanation"):
     st.write('''
         $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,erg\\,cm^{-3}}$
         with $u_{\\lambda}$ the radiation spectrum. For a typical aISRF, $U=1$.
     ''')
 
-ngass = np.array(col2.multiselect('Select gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
+ngass = np.array(col2.multiselect('Multiselect gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
 
 if rat_theory == 'RAT':
-    fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [0.25, 0.5, 1.0])
+    fmaxs = col3.multiselect('Multiselect max. alignment efficiency (fmax)', [0.25, 0.5, 1.0])
 else:
     fmaxs=[0.0]
     st.session_state.disable_opt = True
@@ -141,7 +141,7 @@ with col3.expander("See explanation"):
         
 st.divider()
 
-c1,c2=st.columns(2)
+c1,c2,_=st.columns(3)
 button = c1.button("Clear All Caches")
 if button:   
     st.cache_data.clear()
