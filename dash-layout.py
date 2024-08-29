@@ -115,6 +115,7 @@ ratd,Smax=('off',-1.e-99)
 #         with c3.expander("Definition"):
 #             st.write('''Maximum tensile strength of grain ($\\rm erg\\,cm^{-3}$) -- characterizing grain's porosity
 #             ''')
+
 # Row A
 st.markdown('### Parameters')
 col1, col2, col3 = st.columns(3)
@@ -131,6 +132,8 @@ if rat_theory == 'RAT':
     fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [0.25, 0.5, 1.0])
 else:
     fmaxs=[0.0]
+    st.session_state.disable_opt = True
+    fmaxs = col3.multiselect('Select maximum alignment efficiency (fmax)', [],disabled=st.session_state.disable_opt)
 with col3.expander("See explanation"):
     st.write('''
     For MRAT theory, f$_{\\rm max}$ is estimated by the Bfield strength and Ncl
