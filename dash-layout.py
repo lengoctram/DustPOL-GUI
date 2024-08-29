@@ -63,8 +63,8 @@ st.set_page_config(page_title='Visualization DustPOL-py', page_icon=":shark:", l
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-_,cen,_=st.sidebar.columns(3)
-cen.image("dustpol-logo.png", width=300, use_column_width=True)
+_,cen,_=st.sidebar.columns([1,3,1])
+cen.image("dustpol-logo.png", use_column_width=True)
 
 # st.sidebar.title('Visualization `DustPOL-py`')
 
