@@ -63,9 +63,9 @@ st.set_page_config(page_title='Visualization DustPOL-py', page_icon=":shark:", l
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-# st.sidebar.image("dustpol-logo.png", width=10,use_column_width=False)
+st.sidebar.image("dustpol-logo.png", use_column_width=True)
 
-st.sidebar.title('Visualization `DustPOL-py`')
+# st.sidebar.title('Visualization `DustPOL-py`')
 
 # Header - plot option
 st.sidebar.header('Degree of dust polarization')
