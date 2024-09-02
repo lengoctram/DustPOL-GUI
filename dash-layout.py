@@ -295,7 +295,8 @@ https://arxiv.org/abs/2403.17088
 # st.sidebar.divider()
 st.sidebar.markdown('''
 ---
-Created with ❤️ by [Le N. Tram] \\ 
+Created with ❤️ by `Le N. Tram`
+
 Model: https://github.com/lengoctram/DustPOL-py (beta version) \\
 Contact: nle 'at' strw 'dot' leidenuniv 'dot' nl
 ''')
