@@ -5,6 +5,8 @@ based on Radiative Torque alignment paradigm
 
 -- The science DustPOL-py model is at: [github.com/lengoctram/dustpol](https://github.com/lengoctram/DustPOL-py)
 
+-- The optimization version of DustPOL-py will be available soon.
+
 # Author
 Le Ngoc Tram
 
