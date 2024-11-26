@@ -2,4 +2,4 @@ streamlit
 matplotlib
 astropy
 scipy
-numpy
+numpy>1.23
