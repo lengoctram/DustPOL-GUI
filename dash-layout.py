@@ -171,7 +171,7 @@ def plot_figures():
     
     fig1, ax1, fig2, ax2 = None, None, None, None
     if p_plot_option in ['Starlight Polarization', 'Both']:
-        fig1, ax1 = plt.subplots(figsize=(10, 3))
+        fig1, ax1 = plt.subplots(figsize=(8, 3))
         ax1.set_xlabel('$\\rm wavelength\\,(\\mu m)$')
         ax1.set_ylabel('$\\rm p_{ext}/N_{H}\\,(\\%/cm^{-2})$')
         ax1.set_title('$\\rm Starlight\\,Polarization$',pad=20)
@@ -179,7 +179,7 @@ def plot_figures():
         ax11.set_ylabel('$\\rm A_{\\lambda}/N_{\\rm H}$')
 
     if p_plot_option in ['Thermal dust Polarization', 'Both']:
-        fig2, ax2 = plt.subplots(figsize=(10, 3))
+        fig2, ax2 = plt.subplots(figsize=(8, 3))
         ax2.set_xlabel('$\\rm wavelength\\,(\\mu m)$')
         ax2.set_ylabel('$\\rm p_{em}\\,(\\%)$')
         ax2.set_title('$\\rm Thermal\\,Polarization$',pad=20)
