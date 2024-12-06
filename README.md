@@ -3,7 +3,7 @@
 -- This is a web app for executing and visualizing the DustPOL-py model (modeling multi-wavelength polarization degree of starlight and thermal dust emission) 
 based on Radiative Torque alignment paradigm
 
--- The science DustPOL-py model is at: [github.com/lengoctram/dustpol](https://github.com/lengoctram/DustPOL-py)
+-- The science DustPOL-py model is at: [github.com/lengoctram/dustpol-py](https://github.com/lengoctram/DustPOL-py)
 
 -- The optimization version of DustPOL-py will be available soon.
 
