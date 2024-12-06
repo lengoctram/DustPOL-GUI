@@ -5,16 +5,14 @@ based on Radiative Torque alignment paradigm
 
 -- The science DustPOL-py model is at: [github.com/lengoctram/dustpol-py](https://github.com/lengoctram/DustPOL-py)
 
--- The optimization version of DustPOL-py will be available soon.
-
 # Author
 Le Ngoc Tram
 
 # Features
-Current version is idealization for diffuse ISM, molecular clouds and starforming regions
+The current version of the interface is idealization for diffuse ISM, molecular clouds, and starforming regions
 
 # Upnext
-Up next version will be developed for starless and prostostellar cores
+Up next version will be deployed for starless and protostellar cores
 
 # Bugs
 Please reach out to us at nle@mpifr-bonn.mpg.de 
@@ -25,4 +23,4 @@ Please reach out to us at nle@mpifr-bonn.mpg.de
 
 2- Tram et al. (2021) https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T
 
-3- Tram et al. (2024) https://arxiv.org/abs/2403.17088 (accepted to A&A)
+3- Tram et al. (2024) https://ui.adsabs.harvard.edu/abs/2024A&A...689A.290T
