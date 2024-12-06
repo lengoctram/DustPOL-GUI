@@ -139,7 +139,7 @@ U_rads = col1.multiselect('Multiselect radiation field (U)', list(np.arange(0.,1
 with col1.expander("See explanation"):
     st.write('''
         $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,\\rm erg\\,cm^{-3}}$
-        with $u_{\\lambda}$ the radiation spectrum. For a typical aISRF, $U=1$.
+        with $u_{\\lambda}$ the radiation spectrum. For a typical interstellar medium, $U=1$.
     ''')
 
 ngass = np.array(col2.multiselect('Multiselect gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
