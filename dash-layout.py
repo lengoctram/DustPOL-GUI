@@ -145,7 +145,7 @@ with col1.expander("See explanation"):
 ngass = np.array(col2.multiselect('Multiselect gas volume density (ngas)', [1e1,1e2,1e3,1e4,1e5,1e6,1e7], format_func=lambda x: '{:.1e}'.format(x)))
 with col2.expander("See explanation"):
     st.write('''
-    n$_{\\rm gas}$ is in unit of $\\rm cm^{-3}$
+    n$_{\\rm gas}=n(H) + 2n(H2)+...$ is in unit of $\\rm cm^{-3}$
     ''')
     
 if rat_theory == 'RAT':
@@ -156,7 +156,7 @@ else:
     col3.multiselect('Select maximum alignment efficiency (fmax)', [],disabled=st.session_state.disable_opt)
 with col3.expander("See explanation"):
     st.write('''
-    For MRAT theory, f$_{\\rm max}$ is estimated by the Bfield strength and Ncl
+    $f_{\\rm max}$ is the maximum alignment efficiency. For MRAT theory, $f_{\\rm max}$ is estimated by the input values of Bfield strength and Ncl
     ''')
         
 st.divider()
