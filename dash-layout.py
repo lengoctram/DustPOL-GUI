@@ -5,6 +5,7 @@ import sys
 import matplotlib.pyplot as plt
 from astropy.io import ascii
 import importlib
+import pandas as pd
 from scipy.signal import savgol_filter
 # ----------------------------------------------------------------------------------------- #
 # Execute DustPOL-py
@@ -64,8 +65,8 @@ with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 _,cen,_=st.sidebar.columns([1,3,1])
-# cen.image("dustpol-logo.png", use_column_width=True)
-cen.image("dustpol-logo.png", use_container_width=True)
+cen.image("dustpol-logo.png", use_column_width=True)
+# cen.image("dustpol-logo.png", use_container_width=True)
 
 # st.sidebar.title('Visualization `DustPOL-py`')
 
@@ -136,7 +137,7 @@ with st.sidebar.expander("explanation"):
 # Row A
 st.markdown('### Parameters')
 col1, col2, col3 = st.columns(3)
-U_rads = col1.multiselect('Multiselect radiation field (U)', list(np.arange(0.,10.,1))+list(np.arange(10.,500.,20)))
+U_rads = col1.multiselect('Multiselect radiation field (U)', list(np.arange(0.,10.,1))+list(np.arange(10.,500.,20))+list(np.arange(500.,1020.,20)))
 with col1.expander("See explanation"):
     st.write('''
         $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,\\rm erg\\,cm^{-3}}$
@@ -161,6 +162,11 @@ with col3.expander("See explanation"):
     ''')
         
 st.divider()
+
+##declearing output file
+output_abs={}
+output_emi={}
+output_ext={}
 
 def plot_figures():
     col_count = 8
@@ -197,6 +203,14 @@ def plot_figures():
                     w, pext, pem, A_per_Ngas = results
                     
                     pext = savgol_filter(pext,20,2) # smooth pext (for visualization) -- not physically affected
+                    
+                    output_abs['wavelength(micron)'] = w*1e4
+                    output_abs['p/NH(U=%.1f,ngas=%.1e,fmax=%.1f)'%(U_rad,n_gas,f_max)] = pext/n_gas
+                    output_emi['wavelength(micron)'] = w*1e4
+                    output_emi['pem(U=%.1f,ngas=%.1e,fmax=%.1f)'%(U_rad,n_gas,f_max)] = pem
+                    output_ext['wavelength(micron)'] = w*1e4
+                    output_ext['A_per_Ngas(U=%.1f,ngas=%.1e,fmax=%.1f)'%(U_rad,n_gas,f_max)] = A_per_Ngas
+
                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                     ax11.loglog(w * 1e4, A_per_Ngas,color='k',ls='--')
                  
@@ -213,8 +227,14 @@ def plot_figures():
                 
                 elif p_plot_option == 'Starlight Polarization':
                     w, pext,A_per_Ngas = results
-
+                    
                     pext = savgol_filter(pext,20,2) # smooth pext (for visualization) -- not physically affected
+                    
+                    output_abs['wavelength(micron)'] = w*1e4
+                    output_abs['p/NH(U=%.1f,ngas=%.1e,fmax=%.1f)'%(U_rad,n_gas,f_max)] = pext/n_gas
+                    output_ext['wavelength(micron)'] = w*1e4
+                    output_ext['A_per_Ngas(U=%.1f,ngas=%.1e,fmax=%.1f)'%(U_rad,n_gas,f_max)] = A_per_Ngas
+
                     ax1.semilogx(w * 1e4, pext / n_gas, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                 
                     if (ratd):
@@ -227,6 +247,10 @@ def plot_figures():
                         ax11.loglog(w*1e-4,np.ones(len(w)),color='k',ls='--',label='$\\rm Extinction\\, curve$')
                 elif p_plot_option == 'Thermal dust Polarization':
                     w, pem, A_per_Ngas = results
+                    output_emi['wavelength(micron)'] = w*1e4
+                    output_emi['pem(U=%.1f,ngas=%.1e,fmax=%.1f)'%(U_rad,n_gas,f_max)] = pem
+                    output_ext['wavelength(micron)'] = w*1e4
+                    output_ext['A_per_Ngas(U=%.1f,ngas=%.1e,fmax=%.1f)'%(U_rad,n_gas,f_max)] = A_per_Ngas
                     ax2.semilogx(w * 1e4, pem, label=f'U={U_rad:.1f} -- n$_{{\\rm H}}$={n_gas:.1e} -- f$_{{\\rm max}}$={f_max:.2f}')
                 first=False
 
@@ -241,20 +265,98 @@ def plot_figures():
         ax2.set_xlim([0.05, 5e4])
         st.pyplot(fig2)
 
+# ----------------------------------------------------------------------------------------- #
+# Plots polarization spectra
+# ----------------------------------------------------------------------------------------- #
+st.markdown('### Visualizations')
 plot_figures()
+
+# ----------------------------------------------------------------------------------------- #
+# ASCII files for downloading
+# ----------------------------------------------------------------------------------------- #
+st.divider()
+st.markdown('### ASCII files')
+
+@st.cache_data
+def convert_df(df):
+    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+    return df.to_csv(index=False).encode("utf-8")
+
+my_large_df_abs = pd.DataFrame(data=output_abs)
+csv_abs = convert_df(my_large_df_abs)
+
+my_large_df_emi = pd.DataFrame(data=output_emi)
+csv_emi = convert_df(my_large_df_emi)
+
+my_large_df_ext = pd.DataFrame(data=output_ext)
+csv_ext = convert_df(my_large_df_ext)
+
+if p_plot_option=='Both':
+    col_save1, col_save2, col_save3 = st.columns(3)
+    col_save1.download_button(
+        label="Download pext/NH as CSV",
+        data=csv_abs,
+        file_name="pabs.csv",
+        mime="text/csv",
+    )
+
+    col_save2.download_button(
+        label="Download pem as CSV",
+        data=csv_emi,
+        file_name="pemi.csv",
+        mime="text/csv",
+    )
+
+    col_save3.download_button(
+        label="Download ext_curve as CSV",
+        data=csv_ext,
+        file_name="ext_curve.csv",
+        mime="text/csv",
+    )
+elif p_plot_option=='Starlight Polarization':
+    col_save1, col_save2 = st.columns(2)
+    col_save1.download_button(
+        label="Download pext/NH as CSV",
+        data=csv_abs,
+        file_name="pabs.csv",
+        mime="text/csv",
+    )
+
+    col_save2.download_button(
+        label="Download ext_curve as CSV",
+        data=csv_ext,
+        file_name="ext_curve.csv",
+        mime="text/csv",
+    )
+
+elif p_plot_option=='Thermal dust Polarization':
+    col_save1, col_save2 = st.columns(2)
+    col_save1.download_button(
+        label="Download pem as CSV",
+        data=csv_emi,
+        file_name="pem.csv",
+        mime="text/csv",
+    )
+
+    col_save2.download_button(
+        label="Download ext_curve as CSV",
+        data=csv_ext,
+        file_name="ext_curve.csv",
+        mime="text/csv",
+    )
 
 st.sidebar.markdown('''
 ---
 Model details: please refer to \\
 https://ui.adsabs.harvard.edu/abs/2020ApJ...896...44L \\
 https://ui.adsabs.harvard.edu/abs/2021ApJ...906..115T \\
-https://arxiv.org/abs/2403.17088
+https://www.aanda.org/articles/aa/pdf/2024/09/aa50127-24.pdf
 ''')
 # st.sidebar.divider()
 st.sidebar.markdown('''
 ---
 Created with ❤️ by `Le N. Tram`
 
-Model: https://github.com/lengoctram/DustPOL-py (beta version) \\
+Model: https://github.com/lengoctram/DustPOL-py (version 1.6) \\
 Contact: nle 'at' strw 'dot' leidenuniv 'dot' nl
 ''')
