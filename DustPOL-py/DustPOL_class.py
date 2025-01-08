@@ -239,6 +239,8 @@ class DustPOL:
         if not (self.progress):
             print('\t \033[1;7;34m U=%.3f \033[0m   \t\t '%(self.U))
         w,dP_abs_sil,dP_abs_mix = pol_degree.pol_degree(self)._pol_degree_absorption_(self)
+        dP_abs_sil[dP_abs_sil<0]=np.nan
+        dP_abs_mix[dP_abs_mix<0]=np.nan
         return w,dP_abs_sil,dP_abs_mix
 
     @auto_refresh
