@@ -137,7 +137,7 @@ with st.sidebar.expander("explanation"):
 # Row A
 st.markdown('### Parameters')
 col1, col2, col3 = st.columns(3)
-U_rads = col1.multiselect('Multiselect radiation field (U)', list(np.arange(0.,10.,1))+list(np.arange(10.,500.,20))+list(np.arange(500.,1020.,20)))
+U_rads = col1.multiselect('Multiselect radiation field (U)', list(np.around(np.arange(0.1,1,0.1),2))+list(np.arange(1,10.,1))+list(np.arange(10.,500.,20))+list(np.arange(500.,1020.,20)))
 with col1.expander("See explanation"):
     st.write('''
         $U=\\frac{\\int_{\\lambda}u_{\\lambda}d\\lambda}{8.64\\times 10^{-13}\\,\\rm erg\\,cm^{-3}}$
