@@ -228,7 +228,7 @@ class DustPOL:
             dtau_car = self.Qext_amCBE * np.pi*self.a**2 * self.dn_da_gra
             dtau = dtau_sil + dtau_car
         
-        tau_per_Ngas = integrate.simps(dtau,self.a)
+        tau_per_Ngas = integrate.simpson(dtau,self.a)
         return 1.086*tau_per_Ngas
 
     @auto_refresh
