@@ -116,7 +116,7 @@ class pol_degree(object):
             Qpol_abs_astro=parent.Qpol_abs_astro
 
             dP_abs_a = dn_da_astro* Qpol_abs_astro* np.pi* self.a**2 * self.fa
-            dP_abs   = integrate.simps(dP_abs_a, self.a) * self.ngas*100#* exp(-tau)
+            dP_abs   = integrate.simpson(dP_abs_a, self.a) * self.ngas*100#* exp(-tau)
             return self.w,dP_abs,np.zeros(len(self.w))            
         else:
             dn_da_sil=parent.dn_da_sil
@@ -126,10 +126,10 @@ class pol_degree(object):
             Qpol_abs_amCBE=parent.Qpol_abs_amCBE
 
             dP_abs_sil_a = dn_da_sil* Qpol_abs_sil* np.pi* self.a**2 * self.fa
-            dP_abs_sil   = integrate.simps(dP_abs_sil_a, self.a) * self.ngas*100#* exp(-tau)
+            dP_abs_sil   = integrate.simpson(dP_abs_sil_a, self.a) * self.ngas*100#* exp(-tau)
 
             dP_abs_car_a = dn_da_gra* Qpol_abs_amCBE* np.pi* self.a**2 * self.fa
-            dP_abs_car   = integrate.simps(dP_abs_car_a, self.a)*self.ngas*100 #* exp(-tau)
+            dP_abs_car   = integrate.simpson(dP_abs_car_a, self.a)*self.ngas*100 #* exp(-tau)
 
             dP_abs_mix     = dP_abs_sil+dP_abs_car
             return self.w,dP_abs_sil,dP_abs_mix
@@ -193,10 +193,10 @@ class pol_degree(object):
     # def optical_depth(self):
     #     #optical depth of silicate
     #     fsil_ext= self.Qext_sil * np.pi *self.a*self.a * self.dn_da_sil * NH
-    #     tau_sil = integrate.simps(fsil_ext, a)
+    #     tau_sil = integrate.simpson(fsil_ext, a)
     #     #optical depth of carbon
     #     fgra_ext= Qext_amCBE * pi *a*a * dn_da_gra* NH
-    #     tau_gra = integrate.simps(fgra_ext, a)
+    #     tau_gra = integrate.simpson(fgra_ext, a)
     #     tau = tau_sil+tau_gra
 
     # ==================== Polarized emission ====================
@@ -206,7 +206,7 @@ class pol_degree(object):
         arr1=self.ngas*self.dn_da_sil* (self.Qabs_sil+self.Qpol_sil*self.fa*(2./3-np.sin(self.B_angle)*np.sin(self.B_angle)))* np.pi* self.a**2 
         arr2=self.B_sil.T * np.array([np.exp(-tau)]).T
         dI_em_sil=np.multiply(arr1,arr2)
-        self.Iem_sil = integrate.simps(dI_em_sil, self.a)
+        self.Iem_sil = integrate.simpson(dI_em_sil, self.a)
         return
 
     def fIpol_sil(self,tau):
@@ -214,12 +214,12 @@ class pol_degree(object):
         arr2=self.B_sil.T * np.array([np.exp(-tau)]).T
         arr3=self.ngas*self.dn_da_sil* self.Qpol_sil* np.pi* self.a**2 * self.fa/2 *np.sin(self.B_angle)*np.sin(self.B_angle)
         dI_pol_sil=np.multiply(arr3,arr2)
-        self.Ipol_sil = integrate.simps(dI_pol_sil, self.a)
+        self.Ipol_sil = integrate.simpson(dI_pol_sil, self.a)
         return
 
         # ##Polarized absorption intensities
         # dI_pol_abs_sil = dn_da_sil* Qpol_abs_sil* pi* a**2 * fa
-        # Ipol_abs_sil   = integrate.simps(dI_pol_abs_sil, a) #* exp(-tau)
+        # Ipol_abs_sil   = integrate.simpson(dI_pol_abs_sil, a) #* exp(-tau)
 
     def fIem_car(self,tau):
         # -------- Carbonaceous grain --------
@@ -227,7 +227,7 @@ class pol_degree(object):
         arr1=self.ngas*self.dn_da_gra* self.Qabs_amCBE* np.pi* self.a**2
         arr2=self.B_gra.T * np.array([np.exp(-tau)]).T
         dI_em_amCBE=np.multiply(arr1,arr2)
-        self.Iem_amCBE  = integrate.simps(dI_em_amCBE, self.a)
+        self.Iem_amCBE  = integrate.simpson(dI_em_amCBE, self.a)
         return
 
     def fIpol_car(self,tau):
@@ -235,11 +235,11 @@ class pol_degree(object):
         arr2=self.B_gra.T * np.array([np.exp(-tau)]).T
         arr3=self.ngas*self.dn_da_gra* self.Qpol_amCBE* np.pi* self.a**2 * self.fa/2
         dI_pol_amCBE=np.multiply(arr3,arr2)
-        self.Ipol_amCBE = integrate.simps(dI_pol_amCBE, self.a)
+        self.Ipol_amCBE = integrate.simpson(dI_pol_amCBE, self.a)
         return
         # ##Polarized absorption intensities
         # dI_pol_abs_amCBE = dn_da_gra* Qpol_abs_amCBE* pi* a**2 * fa
-        # Ipol_abs_amCBE   = integrate.simps(dI_pol_abs_amCBE, a) #* exp(-tau)
+        # Ipol_abs_amCBE   = integrate.simpson(dI_pol_abs_amCBE, a) #* exp(-tau)
 
     def fIem_astro(self,tau):
         # -------- Silicate grain --------
@@ -248,7 +248,7 @@ class pol_degree(object):
         arr1=self.ngas*self.dn_da_astro* self.Qabs_astro* np.pi* self.a**2
         arr2=self.B_astro.T * np.array([np.exp(-tau)]).T
         dI_em_astro=np.multiply(arr1,arr2)
-        self.Iem_astro = integrate.simps(dI_em_astro, self.a)
+        self.Iem_astro = integrate.simpson(dI_em_astro, self.a)
         return
 
     def fIpol_astro(self,tau):
@@ -256,7 +256,7 @@ class pol_degree(object):
         arr2=self.B_astro.T * np.array([np.exp(-tau)]).T
         arr3=self.ngas*self.dn_da_astro* self.Qpol_astro* np.pi* self.a**2 * self.fa *np.sin(self.B_angle)*np.sin(self.B_angle)
         dI_pol_astro=np.multiply(arr3,arr2)
-        self.Ipol_astro = integrate.simps(dI_pol_astro, self.a)
+        self.Ipol_astro = integrate.simpson(dI_pol_astro, self.a)
         return
 
     # # ------- dust grain size -------
