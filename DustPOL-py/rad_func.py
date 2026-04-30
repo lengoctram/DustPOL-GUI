@@ -79,7 +79,7 @@ def planck_1(w,na,T,dP_dlnT):
                 B_T[j,k] = 2*H*C**2/(w[k])**5 /(exp(H*C/w[k]/K/T[i,j])-1)
 
         for m in range(nw):
-            B[i,m] = integrate.trapz(dP_dlnT[i]*B_T[:,m]/T[i],T[i])
+            B[i,m] = integrate.trapezoid(dP_dlnT[i]*B_T[:,m]/T[i],T[i])
 
         #printProgressBar(i+1, na, prefix = '  -> Progress:', suffix = 'Complete', length = 30)
     return B
@@ -97,9 +97,9 @@ def planck(w,na,T,dP_dlnT):
             #for j in range(nT):
             #    B_T[j,k] = 2*H*C**2/(w[k])**5 /(exp(H*C/w[k]/K/T[i,j])-1)
             B_T      = 2*H*C**2/(w[k])**5 /(exp(H*C/w[k]/K/T[i,:])-1)
-            B[i,k] = integrate.trapz(func_dPdT*B_T/func_T, func_T) 
+            B[i,k] = integrate.trapezoid(func_dPdT*B_T/func_T, func_T) 
         # for m in range(nw):
-        #     B[i,m] = integrate.trapz(dP_dlnT[i]*B_T[:,m]/T[i],T[i])
+        #     B[i,m] = integrate.trapezoid(dP_dlnT[i]*B_T[:,m]/T[i],T[i])
 
         #printProgressBar(i+1, na, prefix = '  -> Progress:', suffix = 'Complete', length = 30)
     return B
@@ -131,7 +131,7 @@ def planck_test(w,na,T,dP_dlnT):
         func_dPdT = dP_dlnT[i]
         func_T    = T[i]
         B_T      = 2*H*C**2/(w[k])**5 /(exp(H*C/w[k]/K/T[i,:])-1)
-        B[i,k] = integrate.trapz(func_dPdT*B_T/func_T, func_T) 
+        B[i,k] = integrate.trapezoid(func_dPdT*B_T/func_T, func_T) 
         return B
 
     out=Parallel(n_jobs=-1,verbose=0)(delayed(func_integrate)(i, k) for i in range(na) for k in range(nw))
@@ -152,7 +152,7 @@ def uISRF(dpc):
     lmax   = where(abs(lamb-20.e-4) == min(abs(lamb-20.e-4)))
     lrange = lamb[0:lmax[0][0]]
     urange = uISRF[0:lmax[0][0]]
-    u_ISRF = trapz(urange,x=lrange)
+    u_ISRF = integrate.trapezoid(urange,x=lrange)
     return u_ISRF
 
 # compute radiation strength from given radiation field
@@ -169,8 +169,8 @@ def LambU(Av,uISRF,dpc):
     lrange = lamb[0:lmax[0][0]]
     urange = urad[0:lmax[0][0]]
     
-    u_rad = trapz(urange,x=lrange)
-    lambA = trapz(urange*lrange,x=lrange)/u_rad
+    u_rad = integrate.trapezoid(urange,x=lrange)
+    lambA = integrate.trapezoid(urange*lrange,x=lrange)/u_rad
     print('u_rad=',u_rad,'u_ISRF=',uISRF)
     # radiation factor
     U = u_rad / uISRF
